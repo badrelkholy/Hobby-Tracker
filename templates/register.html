@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title%}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-6 col-lg-5 text-center">
+
+                <h1 class="display-5 fw-bold text-white mb-1">Create Account</h1>
+                <p class="text-secondary mb-3">Join the tracker to start logging your habits.</p>
+
+                <form action="/register" method="post">
+                <div class="mb-3 text-start">
+                    <label for="username" class="form-label text-white fw-bold ms-1 mb-2">Username</label>
+                    <input id="username" value = "{{ username or '' }}" autocomplete="off" autofocus class="form-control glass-input shadow-sm" name="username" placeholder="e.g. JohnDoe123" type="text">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="password" class="form-label text-white fw-bold ms-1 mb-2">Password</label>
+                    <input id="password" class="form-control glass-input shadow-sm" name="password" placeholder="******" type="password">
+                </div>
+                <div class="mb-3 text-start">
+                    <label for="confirmpass" class="form-label text-white fw-bold ms-1 mb-2">Confirm Password</label>
+                    <input id="confirmpass" class="form-control glass-input shadow-sm" name="confirmation" placeholder="******" type="password">
+                </div>
+                <div class="d-grid gap-2 mt-4">
+                    <button class="btn btn-primary btn-lg rounded-pill fw-bold py-2" type="submit">Register</button>
+                </div>
+                <!-- Login Bridge -->
+                <div class="mt-4 text-center">
+                    <span class="text-white-50">Already have an account?</span> 
+                    <a href="/login" class="text-orange fw-normal text-decoration-underline ms-1">Login</a>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

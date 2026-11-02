@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobby Tracker - {% block title %}{% endblock %}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-black border-bottom border-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold text-white" href="/">Hobby Tracker</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    {% if session["user_id"] %}
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/' %}text-white fw-bold border-bottom border-2 border-white pb-1{% else %}text-white-50{% endif %}" href="/">Dashboard</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/add_hobby' %}text-white fw-bold border-bottom border-2 border-white pb-1{% else %}text-white-50{% endif %}" href="/add_hobby">Add Hobby</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/log' %}text-white fw-bold border-bottom border-2 border-white pb-1{% else %}text-white-50{% endif %}" href="/log">Log Session</a></li>
+                        <li class="nav-item"><a class="nav-link {% if request.path == '/history' %}text-white fw-bold border-bottom border-2 border-white pb-1{% else %}text-white-50{% endif %}" href="/history">Log History</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
+                    {% else %}
+                        <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="mt-4">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <!-- Wrapping alerts in a container so they don't stretch edge-to-edge -->
+                <div class="container">
+                    {% for category, message in messages %}
+                        <!-- Added shadow-sm and rounded-4 to match the glassy theme -->
+                        <div class="alert alert-{{ category }} alert-dismissible fade show auto-dismiss-alert text-center shadow-sm rounded-4" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block main %}{% endblock %}
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/script.js"></script>
+    <script>
+        // Wait for the DOM to fully load
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find all alert elements with our class
+            const alerts = document.querySelectorAll(".auto-dismiss-alert");
+            
+            alerts.forEach(function (alert) {
+                // Set a timer for 4000 milliseconds (4 seconds)
+                setTimeout(function () {
+                    // Check if Bootstrap JS is available to close it smoothly
+                    if (typeof bootstrap !== "undefined" && bootstrap.Alert) {
+                        const bsAlert = new bootstrap.Alert(alert);
+                        bsAlert.close();
+                    } else {
+                        // Fallback: simple fade and remove
+                        alert.style.transition = "opacity 0.5s ease";
+                        alert.style.opacity = "0";
+                        setTimeout(() => alert.remove(), 500);
+                    }
+                }, 4000); // 4 seconds delay
+            });
+        });
+    </script>
+</body>
+</html>

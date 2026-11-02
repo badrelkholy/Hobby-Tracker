@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+
+{% block title%}
+    Add Hobby
+{% endblock %}
+
+{% block main %}
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5 text-center">
+                
+                <!-- Big Bold Header -->
+                <h1 class="display-5 fw-bold text-white mb-2">
+                    What hobby are you tracking?
+                </h1>
+                <p class="text-secondary mb-4">
+                    Type the name of your new activity or habit below.
+                </p>
+
+                <!-- Form -->
+                <form action="/add_hobby" method="post">
+                    <!-- Hobby name-->
+                    <div class="mb-4">
+                        <input type="text" 
+                            id="hobby_name" 
+                            name="hobby_name" 
+                            class="form-control glass-input shadow-sm" 
+                            placeholder="e.g., Tennis, BMX, Reading..." 
+                            required 
+                            autofocus>
+                    </div>
+                    <!-- How to track hobby-->
+                    <div class="mb-4 text-start">
+                        <label class="form-label text-white fw-bold ms-1 mb-2 d-block">How will you track this?</label>
+
+                        <div class="d-flex gap-2 justify-content-between">
+                            <!-- Option 1: Time -->
+                            <input type="radio" class="btn-check" name="measure_type" id="type_time" value="time">
+                            <label class="btn btn-outline-light rounded-pill px-4" for="type_time">&#9201; Time (hrs/mins)</label>
+                            <!-- Option 2: Units/Reps -->
+                            <input type="radio" class="btn-check" name="measure_type" id="type_units" value="units">
+                            <label class="btn btn-outline-light rounded-pill px-4" for="type_units">&#128204; Units (Reps)</label>
+                            <!-- Option 3: Yes/No -->
+                            <input type="radio" class="btn-check" name="measure_type" id="type_boolean" value="boolean">
+                            <label class="btn btn-outline-light rounded-pill px-4" for="type_boolean">&#9989; Check-in (yes/no)</label>
+                        </div>
+                    </div>
+                    <!-- Hobby Weekly Goal -->
+                    <div class="mb-4 text-start">
+                        <label class="form-label text-white fw-bold ms-1 mb-2 d-block">Set a weekly goal:</label>
+                        <input type="number" class="form-control glass-input shadow-sm" name="goal" id="goal" placeholder="e.g. 3 (sessions or hrs)" min="1" required>
+                    </div>
+                    
+                    <!-- Sleek Full-Width Submit Button -->
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg rounded-pill fw-bold py-3">
+                            Add Hobby
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

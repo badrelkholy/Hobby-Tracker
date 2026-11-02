@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+
+{% block title%}
+    Log Session
+{% endblock %}
+
+{% block main %}
+    <div class="container py-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6 text-center">
+                {% if hobbies %}
+                    <!-- Page Header -->
+                    <h1 class="display-6 fw-bold text-white mb-1">Log Activity &#128221;</h1>
+                    <p class="text-white-50 mb-4 fs-6">Record your latest progress and stay consistent.</p>
+                    
+                    <!-- Stopwatch Card -->
+                    <div class="card glass-card text-center p-4 shadow-sm mb-4">
+                        <h3 class="fw-bold text-white mb-2">Live Timer &#9201;</h3>
+                        <!-- The ID here lets JS update the text -->
+                        <div id="stopwatch-display" class="display-3 fw-bold text-white mb-4" style="font-variant-numeric: tabular-nums;">
+                            00:00:00
+                        </div>
+                        
+                        <div class="d-flex justify-content-center gap-2">
+                            <!-- IDs allow JS to detect when these specific buttons are clicked -->
+                            <button type="button" id="start-btn" class="btn btn-success rounded-pill px-4 fw-bold">Start</button>
+                            <button type="button" id="stop-btn" class="btn btn-danger rounded-pill px-4 fw-bold">Stop</button>
+                            <button type="button" id="reset-btn" class="btn btn-secondary rounded-pill px-4 fw-bold">Reset</button>
+                        </div>
+                    </div>
+
+                    <!-- Form Card -->
+                    <div id="log-card" class="card glass-card text-start p-4 shadow-sm" style="transition: background 0.5s ease-in-out; background-size: cover; background-position: center;">
+                        <form action="/log" method="post">
+                            <!-- 1. Hobby Dropdown Selector -->
+                            <div class="mb-3">
+                                <label for="hobby_id" class="form-label text-white fw-bold ms-1 mb-2">Select Hobby</label>
+                                <select id="hobby_id" name="hobby_id" class="form-select glass-input shadow-sm" required>
+                                    <option value="" disabled selected>Choose a hobby...</option>
+                                    {% for hobby in hobbies %}
+                                        <option value="{{ hobby.id }}" data-image="{{ hobby.image_url }}">
+                                            {{ hobby.hobby_name }} 
+                                            ({% if hobby.measure_type == 'boolean' %}
+                                                Yes / No Check-in
+                                            {% elif hobby.measure_type == 'time' %}
+                                                Time (Mins)
+                                            {% else %}
+                                                {{ hobby.measure_type | capitalize }}
+                                            {% endif %})
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- 2. Amount Input -->
+                            <div class="mb-3">
+                                <label for="amount" class="form-label text-white fw-bold ms-1 mb-2">Amount / Effort</label>
+                                <input id="amount" name="amount" type="number" min="1" class="form-control glass-input shadow-sm" placeholder="e.g., 60 (mins), 5 (units), or 1 (check-in)" required>
+                            </div>
+
+                            <!-- 3. Rating Selector (1-10) -->
+                            <div class="mb-3">
+                                <label for="rating" class="form-label text-white fw-bold ms-1 mb-2">Session Rating (1 - 10)</label>
+                                <select id="rating" name="rating" class="form-select glass-input shadow-sm">
+                                    <option value="" selected>Rate this session (Optional)...</option>
+                                    {% for r in range(1, 11) %}
+                                        <option value="{{ r }}">{{ r }} / 10</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- 4. Reflection Notes Field -->
+                            <div class="mb-4">
+                                <label for="notes" class="form-label text-white fw-bold ms-1 mb-2">Session Notes</label>
+                                <textarea id="notes" name="notes" rows="3" class="form-control glass-input shadow-sm" placeholder="How did it feel? Any new achievements or thoughts?"></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="d-grid gap-2 mt-4">
+                                <button class="btn btn-primary btn-lg rounded-pill fw-bold py-2" type="submit">
+                                    Save Log Entry &#9989;
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                {% else %}
+                <!-- Empty state banner -->
+                <div class="card glass-card p-5 text-white my-4 shadow-sm">
+                    <div class="card-body">
+                        <div class="display-1 mb-3">&#127771;</div>
+                        <h3 class="fw-bold mb-2">It's a Bit Quiet Here!</h3>
+                        <p class="text-white-50 mb-4 fs-5">
+                            You don't have any active hobbies to log yet. Set up your first hobby to start tracking your goals!
+                        </p>
+                        <a href="/add_hobby" class="btn btn-primary btn-lg rounded-pill fw-bold px-4">
+                            + Add Your First Hobby
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+<script src="/static/script.js"></script>
+{% endblock %}

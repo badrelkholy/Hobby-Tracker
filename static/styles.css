@@ -1,0 +1,92 @@
+/* 1. Global Background and Text */
+body {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+/* 2. Override Bootstrap's Primary Button (Make it Orange) */
+.btn-primary {
+    background-color: #ff7f00; 
+    border-color: #ff7f00;
+    color: #ffffff; 
+}
+
+/* 3. Button Hover Effect */
+.btn-primary:hover, .btn-primary:active {
+    background-color: #e67300; /* A slightly darker orange for when the user clicks/hovers */
+    border-color: #e67300;
+    color: #ffffff;
+}
+
+/* 4. Style standard links to be orange instead of blue */
+a {
+    color: #ff7f00;
+}
+a:hover {
+    color: #e67300;
+}
+
+/* 5. Input Field Focus Ring (Orange) */
+.form-control:focus {
+    border-color: #ff7f00;
+    /* This creates the glowing shadow: X-offset, Y-offset, blur, spread, color */
+    box-shadow: 0 0 0 0.25rem rgba(255, 127, 0, 0.25);
+}
+
+/* AI helped me in order to find out the correct settings for a glassy look */
+
+
+/* Glassy Modern Input Box */
+.glass-input {
+    background: rgba(255, 255, 255, 0.07) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    color: #ffffff !important;
+    padding: 1.25rem 1.5rem !important;
+    font-size: 1.1rem !important;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Glossy highlight when focused */
+.glass-input:focus {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border-color: #ff7b00 !important; /* Your custom orange accent */
+    box-shadow: 0 0 20px rgba(255, 123, 0, 0.25) !important;
+    outline: none;
+}
+
+/* Soft muted placeholder text */
+.glass-input::placeholder {
+    color: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* Glossy Card Container */
+.glass-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    border-radius: 16px !important;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+/* Subtle hover pop effect */
+.glass-card:hover {
+    border-color: rgba(255, 123, 0, 0.5) !important; /* Your custom orange accent */
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Ensure options inside dropdown menus remain visible */
+.glass-input option {
+    background-color: #1a1a1a !important;
+    color: #ffffff !important;
+}
+
+/* Enable custom resizability for textareas */
+textarea.glass-input {
+    resize: vertical;
+    min-height: 90px;
+}
